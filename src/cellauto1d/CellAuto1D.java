@@ -24,7 +24,7 @@ public class CellAuto1D {
     public static void main(String[] args) {
         int timeLimit = 51;
         int size = 51;
-        short rule = 30;
+        int rule = 2007;
 
         // position of 1 value bits, relative to the middle
         // TODO: load from file
@@ -41,7 +41,7 @@ public class CellAuto1D {
                     size = Integer.valueOf(args[++i]);
                     break;
                 case "-rule":
-                    rule = Short.valueOf(args[++i]);
+                    rule = Integer.valueOf(args[++i]);
                     break;
             }
         }
@@ -59,7 +59,7 @@ public class CellAuto1D {
         ArrayList<Integer> firstGeneration = new ArrayList<>(size);
         for (int i = 0; i < size; ++i) {
             if (Arrays.asList(start).contains(i)) {
-                firstGeneration.add(1);
+                firstGeneration.add(2);
             } else {
                 firstGeneration.add(0);
             }
@@ -77,15 +77,25 @@ public class CellAuto1D {
 
     private static void saveImage(ArrayList<ArrayList<Integer>> generations, int width, int height) {
         BufferedImage image = new BufferedImage(width, height,
-                BufferedImage.TYPE_BYTE_BINARY);
+                BufferedImage.TYPE_INT_RGB);
 
-        for(int i = 0; i < height; ++i){
+        for (int i = 0; i < height; ++i) {
             ArrayList<Integer> gen = generations.get(i);
-            for(int j = 0; j < width; ++j){
-                image.setRGB(j, i, Integer.MAX_VALUE - gen.get(j) * Integer.MAX_VALUE);
+            for (int j = 0; j < width; ++j) {
+                switch (gen.get(j)) {
+                    case 0:
+                        image.setRGB(j, i, (int) (220 * Math.pow(256, 2) + 241 * Math.pow(256, 1) + 161 * Math.pow(256, 0)));
+                        break;
+                    case 1:
+                        image.setRGB(j, i, (int) (174 * Math.pow(256, 2) + 201 * Math.pow(256, 1) + 101 * Math.pow(256, 0)));
+                        break;
+                    case 2:
+                        image.setRGB(j, i, (int) (94 * Math.pow(256, 2) + 121 * Math.pow(256, 1) + 20 * Math.pow(256, 0)));
+                        break;
+                }
             }
         }
-        
+
         try {
             File outputfile = new File("saved.png");
             ImageIO.write(image, "png", outputfile);
