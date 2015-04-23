@@ -35,7 +35,13 @@ public class RuleSet {
                 sum += gen.get(j);
             }
         }
-        String c = "" + Integer.toString(ruleNumber, 3).charAt(6 - sum);;
+        String radix = "0000000" + Integer.toString(ruleNumber, 3);
+        
+        String reverse = new StringBuilder(radix).reverse().toString();
+        //System.out.println(reverse);
+        
+        String c = "" + reverse.charAt(sum);
+       // System.out.println("sum: " + sum + " c: " + c);
  
         return Integer.valueOf(c);
     }

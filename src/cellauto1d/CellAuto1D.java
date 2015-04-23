@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 import javax.imageio.ImageIO;
 
 /**
@@ -25,6 +26,8 @@ public class CellAuto1D {
         int timeLimit = 51;
         int size = 51;
         int rule = 2007;
+        boolean randomStart = false;
+        Random random = null;
 
         // position of 1 value bits, relative to the middle
         // TODO: load from file
@@ -43,6 +46,10 @@ public class CellAuto1D {
                 case "-rule":
                     rule = Integer.valueOf(args[++i]);
                     break;
+                case "-random":
+                    randomStart = true;
+                    random = new Random();
+                    break;
             }
         }
 
@@ -58,10 +65,14 @@ public class CellAuto1D {
 
         ArrayList<Integer> firstGeneration = new ArrayList<>(size);
         for (int i = 0; i < size; ++i) {
-            if (Arrays.asList(start).contains(i)) {
-                firstGeneration.add(2);
-            } else {
-                firstGeneration.add(0);
+            if(randomStart){
+                firstGeneration.add(random.nextInt(3));
+            }else{
+                if (Arrays.asList(start).contains(i)) {
+                    firstGeneration.add(1);
+                } else {
+                    firstGeneration.add(0);
+                }
             }
         }
 
