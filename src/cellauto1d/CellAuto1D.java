@@ -69,7 +69,7 @@ public class CellAuto1D {
                 firstGeneration.add(random.nextInt(3));
             }else{
                 if (Arrays.asList(start).contains(i)) {
-                    firstGeneration.add(1);
+                    firstGeneration.add(2);
                 } else {
                     firstGeneration.add(0);
                 }
